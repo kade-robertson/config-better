@@ -23,33 +23,33 @@ class Config:
         if self.__data:
             return self._getdir(self.__data, self.appname)
         elif sys.platform == 'win32':
-            return self._getdir('%APPDATA%', self.appname, 'Data')
+            return self._getdir(os.environ['APPDATA'], self.appname, 'Data')
         elif sys.platform == 'darwin':
-            return self._getdir('$HOME/Library', self.appname)
+            return self._getdir('$HOME', 'Library', self.appname)
         else:
-            return self._getdir('$HOME/.local/share', self.appname)
+            return self._getdir('$HOME', '.local', 'share', self.appname)
 
     @property
     def config(self):
         if self.__config:
             return self._getdir(self.__config, self.appname)
         elif sys.platform == 'win32':
-            return self._getdir('%APPDATA%', self.appname, 'Config')
+            return self._getdir(os.environ['APPDATA'], self.appname, 'Config')
         elif sys.platform == 'darwin':
-            return self._getdir('$HOME/Library/Preferences', self.appname)
+            return self._getdir('$HOME', 'Library', 'Preferences', self.appname)
         else:
-            return self._getdir('$HOME/.config', self.appname)
+            return self._getdir('$HOME', '.config', self.appname)
 
     @property
     def cache(self):
-        if self.__data:
-            return self._getdir(self.__data, self.appname)
+        if self.__cache:
+            return self._getdir(self.__cache, self.appname)
         elif sys.platform == 'win32':
-            return self._getdir('%APPDATA%', self.appname, 'Cache')
+            return self._getdir(os.environ['APPDATA'], self.appname, 'Cache')
         elif sys.platform == 'darwin':
-            return self._getdir('$HOME/Library/Caches', self.appname)
+            return self._getdir('$HOME', 'Library', 'Caches', self.appname)
         else:
-            return self._getdir('$HOME/.cache', self.appname)
+            return self._getdir('$HOME', '.cache', self.appname)
 
     def makedirs(self):
         if not os.path.exists(self.data):
