@@ -42,8 +42,8 @@ class Config:
 
     @property
     def cache(self):
-        if self.__data:
-            return self._getdir(self.__data, self.appname)
+        if self.__cache:
+            return self._getdir(self.__cache, self.appname)
         elif sys.platform == 'win32':
             return self._getdir('%APPDATA%', self.appname, 'Cache')
         elif sys.platform == 'darwin':
