@@ -1,15 +1,14 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 import configbetter
 
 with open('README.md') as fh:
-    long_desc = fh.read() 
+    long_desc = fh.read()
 
 setup(
     name="config-better",
     version="0.2.0",
-    description=
-    "Configure your application in a friendlier and more consistent way!",
+    description="Configure your application in a friendlier and more consistent way!",
     long_description=long_desc,
     long_description_content_type='text/markdown',
     classifiers=[
@@ -21,7 +20,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent"
+        "Operating System :: OS Independent",
     ],
     license="MIT",
     url="https://github.com/kade-robertson/config-better",

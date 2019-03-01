@@ -8,6 +8,7 @@ This module provides support for the XDG Base Directory specification, and OS-fr
 
 ```python
 import os.path
+
 import configbetter
 
 c = configbetter.Config('appname')
@@ -34,4 +35,9 @@ pip install config-better
 
 ## Developing
 
-Clone the repo, make a new branch, add features/fixes/etc, test with `python setup.py test` and make a PR.
+1. Clone the repo
+2. `git checkout -b some-feature-or-bugfix`
+3. Do work
+4. Test with `python setup.py test` (add if necessary)
+5. Run `yapf -ir .` and `isort` to standardize.
+6. Make a PR.
