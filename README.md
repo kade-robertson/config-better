@@ -8,9 +8,9 @@ This module provides support for the XDG Base Directory specification, and OS-fr
 
 ```python
 import os.path
-import config
+import configbetter
 
-c = config.Config('appname')
+c = configbetter.Config('appname')
 
 with open(os.path.join(c.config, 'config.json')) as conf:
     # ...
