@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-import src
+import configbetter
 
 with open('README.md') as fh:
     long_desc = fh.read() 
