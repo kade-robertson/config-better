@@ -30,4 +30,5 @@ setup(
     author_email="kade@kaderobertson.pw",
     packages=find_packages(),
     install_requires=[],
+    test_suite='tests',
     python_requires='>=2.7.3, !=3.0.*, !=3.1.*, !=3.2.*')
