@@ -28,6 +28,10 @@ Additionally, the following method is provided:
 
 ## Installation
 
-```
+```bash
 pip install config-better
 ```
+
+## Developing
+
+Clone the repo, make a new branch, add features/fixes/etc, test with `python setup.py test` and make a PR.
