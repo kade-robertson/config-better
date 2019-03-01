@@ -7,7 +7,7 @@ with open('README.md') as fh:
 
 setup(
     name="config-better",
-    version="0.1.0",
+    version="0.2.0",
     description=
     "Configure your application in a friendlier and more consistent way!",
     long_description=long_desc,
