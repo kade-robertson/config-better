@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/config-better-workspace
+    docker:
+      - image: circleci/python:3.7.2
+    steps:
+      - checkout
+      - run:
+          command: |
+            sudo pip install -e .
+            sudo python setup.py test
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+          destination: tr1
