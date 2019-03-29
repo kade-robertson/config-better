@@ -9,9 +9,9 @@ jobs:
       - run:
           command: |
             sudo pip install -e .
-            sudo python setup.py test
+            sudo pip install pytest
+            sudo pytest --junit-xml ~/test-results/tests.xml
       - store_test_results:
-          path: test-results
+          path: ~/test-results
       - store_artifacts:
-          path: test-results
-          destination: tr1
+          path: ~/test-results
