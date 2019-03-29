@@ -1,5 +1,7 @@
 # config-better
 
+![CircleCI Build Status](https://img.shields.io/circleci/token/a23936ed1748d98b98003357c1e205619209af66/project/github/kade-robertson/config-better/master.svg?style=flat-square)
+
 Make use of directories for configuration / data / caching better and more user-friendly!
 
 This module provides support for the XDG Base Directory specification, and OS-friendly fallbacks for Windows, Mac OS, and Linux if not otherwise specified.
