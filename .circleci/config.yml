@@ -9,8 +9,11 @@ jobs:
       - run:
           command: |
             sudo pip install -e .
-            sudo pip install pytest
-            sudo pytest --junit-xml ~/test-results/tests.xml
+            sudo pip install pytest pytest-cov nose2 nose2[coverage_plugin] codecov
+            pytest --junit-xml ~/test-results/tests.xml
+            echo -e "[run]\nomit = setup.py" > .coveragerc
+            nose2 --with-coverage --coverage-report xml
+            codecov
       - store_test_results:
           path: ~/test-results
       - store_artifacts:
