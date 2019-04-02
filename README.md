@@ -28,6 +28,7 @@ Available properties of `Config`:
 Additionally, the following method is provided:
 
 - `.makedirs()` will create the cache, config and data directories if they do not already exist, including all parent directories.
+- `.rmdirs()` will remove any program-specific directories that would have been created by config-better.
 
 ## Installation
 
@@ -40,6 +41,6 @@ pip install config-better
 1. Clone the repo
 2. `git checkout -b some-feature-or-bugfix`
 3. Do work
-4. Test with `python setup.py test` (add if necessary)
-5. Run `yapf -ir .` and `isort` to standardize.
+4. Test with `pytest` (add tests to maintain coverage as best as possible)
+5. Run `yapf -ir .` and `isort -rc .` to standardize.
 6. Make a PR.

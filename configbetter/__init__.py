@@ -3,6 +3,7 @@ Handles all of the logic for config-better.
 """
 
 import os
+import shutil
 import sys
 
 
@@ -57,7 +58,7 @@ class Config:
         Returns:
             str -- The full path to the preferred data folder.
         """
-        
+
         if self.__data:
             return _getdir(self.__data, self.appname)
         if sys.platform == 'win32':
@@ -135,3 +136,23 @@ class Config:
             os.makedirs(self.config)
         if not os.path.exists(self.cache):
             os.makedirs(self.cache)
+
+    def rmdirs(self):
+        """
+        Removes the data, cache and config folders.
+
+        May be useful for uninstall scripts or cleaning scripts. Handles a
+        special case for Windows where, in default scenarios, there is a parent]
+        directory that needs to be cleared.
+        """
+
+        if os.path.exists(self.cache):
+            shutil.rmtree(self.cache)
+        if os.path.exists(self.config):
+            shutil.rmtree(self.config)
+        if os.path.exists(self.data):
+            shutil.rmtree(self.data)
+        windows_dir = _getdir(os.environ['APPDATA'], self.appname)
+        if sys.platform == 'win32' and not (self.__data or self.__cache
+                                            or self.__config) and os.path.exists(windows_dir):
+            shutil.rmtree(windows_dir)

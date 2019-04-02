@@ -7,7 +7,7 @@ import configbetter
 with open('README.md') as fh:
     long_desc = fh.read()
 
-version = "0.2.0"
+version = "1.0.0"
 last_commit = subprocess.check_output(["git", "rev-list", "HEAD",
                                        "--count"]).decode('utf-8').strip()
 branch = subprocess.check_output(["git", "rev-parse", "--abbrev-ref",
@@ -20,7 +20,7 @@ setup(
     long_description=long_desc,
     long_description_content_type='text/markdown',
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Stable",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
