@@ -1,7 +1,43 @@
 import os
+import sys
 import unittest
 
 import configbetter
+
+        
+class TestMakedirs(unittest.TestCase):
+    def setUp(self):
+        configbetter.sys.platform = sys.platform
+        if sys.platform in ['linux', 'darwin']:
+            configbetter.os.environ['HOME'] = os.path.expanduser('~')
+        elif sys.platform == 'win32':
+            configbetter.os.environ['APPDATA'] = os.environ['APPDATA']
+        if 'XDG_DATA_HOME' in configbetter.os.environ:
+            del configbetter.os.environ['XDG_DATA_HOME']
+        if 'XDG_CONFIG_HOME' in configbetter.os.environ:
+            del configbetter.os.environ['XDG_CONFIG_HOME']
+        if 'XDG_CACHE_HOME' in configbetter.os.environ:
+            del configbetter.os.environ['XDG_CACHE_HOME']
+        print(configbetter.os.environ)
+        self.conf = configbetter.Config('notarealapp')
+        self.conf.makedirs()
+   
+    def tearDown(self):
+        if os.path.exists(self.conf.cache):
+            os.rmdir(self.conf.cache)
+        if os.path.exists(self.conf.config):
+            os.rmdir(self.conf.config)
+        if os.path.exists(self.conf.data):
+            os.rmdir(self.conf.data)
+    
+    def test_data_dir(self):
+        self.assertTrue(os.path.exists(self.conf.data))
+        
+    def test_config_dir(self):
+        self.assertTrue(os.path.exists(self.conf.config))
+        
+    def test_cache_dir(self):
+        self.assertTrue(os.path.exists(self.conf.cache))
 
 
 class TestWindowsNoXDG(unittest.TestCase):
