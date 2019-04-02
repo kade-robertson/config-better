@@ -9,10 +9,14 @@ jobs:
       - run:
           command: |
             sudo pip install -e .
-            sudo pip install pytest pytest-cov codecov
+            sudo pip install pytest pytest-cov codecov wheel
             pytest --junit-xml ~/test-results/tests.xml --cov-report xml --cov=. tests/
             codecov
+            sudo python setup.py sdist -d ~/builds
+            sudo python setup.py bdist_wheel -d ~/builds
       - store_test_results:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results
+      - store_artifacts:
+          path: ~/builds
