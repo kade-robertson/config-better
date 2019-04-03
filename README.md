@@ -1,6 +1,8 @@
 # config-better
 
-![CircleCI Build Status](https://img.shields.io/circleci/token/a23936ed1748d98b98003357c1e205619209af66/project/github/kade-robertson/config-better/master.svg?style=flat-square) ![Codecov](https://img.shields.io/codecov/c/github/kade-robertson/config-better.svg?style=flat-square)
+[![PyPI](https://img.shields.io/pypi/v/config-better.svg?style=flat-square)](https://pypi.org/project/config-better/)
+[![CircleCI Build Status](https://img.shields.io/circleci/token/a23936ed1748d98b98003357c1e205619209af66/project/github/kade-robertson/config-better/master.svg?style=flat-square)](https://circleci.com/gh/kade-robertson/config-better)
+[![Codecov](https://img.shields.io/codecov/c/github/kade-robertson/config-better.svg?style=flat-square)](https://codecov.io/gh/kade-robertson/config-better)
 
 Make use of directories for configuration / data / caching better and more user-friendly!
 
