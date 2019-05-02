@@ -7,7 +7,7 @@ import configbetter
 with open('README.md') as fh:
     long_desc = fh.read()
 
-version = "1.0.0"
+version = "1.0.1"
 last_commit = subprocess.check_output(["git", "rev-list", "HEAD",
                                        "--count"]).decode('utf-8').strip()
 branch = subprocess.check_output(["git", "rev-parse", "--abbrev-ref",
