@@ -16,7 +16,7 @@ class Config:
     Provides functionality to determine & create directories.
     """
 
-    def __init__(self, appname: str):
+    def __init__(self, appname: str, force_unix: bool = False):
         """
         Creates a Config object.
         
@@ -26,9 +26,14 @@ class Config:
         Arguments:
             appname {str} -- The name that will be used when deciding the
                              folders to be used for data, config and cache.
+            force_unix {bool} -- If desired, you can force this to only use
+                                 Unix-like paths even on Windows/Darwin.
+                                 This does not take effect if XDG_ vars are
+                                 set.
         """
 
         self.appname = appname
+        self.force_unix = force_unix
         self.__data = None
         self.__config = None
         self.__cache = None
@@ -61,9 +66,9 @@ class Config:
 
         if self.__data:
             return _getdir(self.__data, self.appname)
-        if sys.platform == 'win32':
+        if sys.platform == 'win32' and not self.force_unix:
             return _getdir(os.environ['APPDATA'], self.appname, 'Data')
-        if sys.platform == 'darwin':
+        if sys.platform == 'darwin' and not self.force_unix:
             return _getdir('$HOME', 'Library', self.appname)
         return _getdir('$HOME', '.local', 'share', self.appname)
 
@@ -89,9 +94,9 @@ class Config:
 
         if self.__config:
             return _getdir(self.__config, self.appname)
-        if sys.platform == 'win32':
+        if sys.platform == 'win32' and not self.force_unix:
             return _getdir(os.environ['APPDATA'], self.appname, 'Config')
-        if sys.platform == 'darwin':
+        if sys.platform == 'darwin' and not self.force_unix:
             return _getdir('$HOME', 'Library', 'Preferences', self.appname)
         return _getdir('$HOME', '.config', self.appname)
 
@@ -117,9 +122,9 @@ class Config:
 
         if self.__cache:
             return _getdir(self.__cache, self.appname)
-        if sys.platform == 'win32':
+        if sys.platform == 'win32' and not self.force_unix:
             return _getdir(os.environ['APPDATA'], self.appname, 'Cache')
-        if sys.platform == 'darwin':
+        if sys.platform == 'darwin' and not self.force_unix:
             return _getdir('$HOME', 'Library', 'Caches', self.appname)
         return _getdir('$HOME', '.cache', self.appname)
 
@@ -153,6 +158,6 @@ class Config:
         if os.path.exists(self.data):
             shutil.rmtree(self.data)
         windows_dir = _getdir(os.environ['APPDATA'], self.appname)
-        if sys.platform == 'win32' and not (self.__data or self.__cache
+        if sys.platform == 'win32' and not self.force_unix and not (self.__data or self.__cache
                                             or self.__config) and os.path.exists(windows_dir):
             shutil.rmtree(windows_dir)

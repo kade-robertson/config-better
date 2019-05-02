@@ -147,6 +147,30 @@ class TestMacNoXDG(unittest.TestCase):
     def test_noxdg_cache(self):
         checkcache = os.path.join(self.tempdir, 'Library', 'Caches', 'fakeapp')
         self.assertEqual(self.conf.cache, checkcache)
+        
+class TestMacForceUnix(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        configbetter.sys.platform = 'darwin'
+        cls.tempdir = tempfile.mkdtemp()
+        configbetter.os.environ['HOME'] = cls.tempdir
+        cls.conf = configbetter.Config('fakeapp', force_unix = True)
+
+    @classmethod
+    def tearDownClass(cls):
+        os.rmdir(cls.tempdir)
+
+    def test_noxdg_data(self):
+        checkdata = os.path.join(self.tempdir, '.local', 'share', 'fakeapp')
+        self.assertEqual(self.conf.data, checkdata)
+
+    def test_noxdg_config(self):
+        checkconfig = os.path.join(self.tempdir, '.config', 'fakeapp')
+        self.assertEqual(self.conf.config, checkconfig)
+
+    def test_noxdg_cache(self):
+        checkcache = os.path.join(self.tempdir, '.cache', 'fakeapp')
+        self.assertEqual(self.conf.cache, checkcache)
 
 
 class TestXDG(unittest.TestCase):
