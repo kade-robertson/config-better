@@ -21,6 +21,10 @@ with open(os.path.join(c.config, 'config.json')) as conf:
     # ...
 ```
 
+Available parameters for creating a `Config` instance:
+
+- `force_unix` allows you to force using Unix-y paths on Windows/Darwin if desired. This isn't really recommended on Windows but on Darwin it seems as though programs without a GUI usually use Unix-y configuration paths while GUI apps use the "standard" Darwin paths. By default this is `False`.
+
 Available properties of `Config`:
 
 - `.cache`, which points to `$XDG_CACHE_HOME` if available, otherwise uses a generic system equivalent.
