@@ -23,7 +23,7 @@ with open(os.path.join(c.config, 'config.json')) as conf:
 
 Available parameters for creating a `Config` instance:
 
-- `force_unix` allows you to force using Unix-y paths on Windows/Darwin if desired. This isn't really recommended on Windows but on Darwin it seems as though programs without a GUI usually use Unix-y configuration paths while GUI apps use the "standard" Darwin paths. By default this is `False`.
+- `force_unix` allows you to force using Unix-like paths on Windows/Darwin if desired. This isn't really recommended on Windows but on Darwin it seems as though programs without a GUI usually use Unix-like configuration paths while GUI apps use the "standard" Darwin paths. By default this is `False`.
 
 Available properties of `Config`:
 
@@ -31,7 +31,7 @@ Available properties of `Config`:
 - `.config`, which points to `$XDG_CONFIG_HOME` if available, otherwise uses a generic system equivalent.
 - `.data`, which points to `$XDG_DATA_HOME` if available, otherwise uses a generic system equivalent.
 
-Additionally, the following method is provided:
+Additionally, the following methods are provided:
 
 - `.makedirs()` will create the cache, config and data directories if they do not already exist, including all parent directories.
 - `.rmdirs()` will remove any program-specific directories that would have been created by config-better.
