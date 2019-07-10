@@ -1,22 +1,61 @@
 version: 2
-jobs:
-  build:
-    working_directory: ~/config-better-workspace
-    docker:
-      - image: circleci/python:3.7.2
-    steps:
+aliases:
+  - default: &default
+      docker:
+        - image: circleci/python:3.7.4
+      working_directory: ~/config-better-workspace
+  - &setupcmd
+      run:
+        command: |
+          sudo pip install -e .
+          sudo pip install pytest pytest-cov codecov wheel
+          pytest --junit-xml ~/test-results/tests.xml --cov-report xml --cov=. tests/
+  - &covandbuild
+      run:
+        command: |
+          codecov
+          sudo python setup.py sdist -d ~/builds
+          sudo python setup.py bdist_wheel -d ~/builds
+  - &uploadtests
+      store_test_results:
+        path: ~/test-results
+  - defaultsteps: &defaultsteps
       - checkout
-      - run:
-          command: |
-            sudo pip install -e .
-            sudo pip install pytest pytest-cov codecov wheel
-            pytest --junit-xml ~/test-results/tests.xml --cov-report xml --cov=. tests/
-            codecov
-            sudo python setup.py sdist -d ~/builds
-            sudo python setup.py bdist_wheel -d ~/builds
-      - store_test_results:
-          path: ~/test-results
-      - store_artifacts:
-          path: ~/test-results
-      - store_artifacts:
-          path: ~/builds
+      - *setupcmd
+      - *uploadtests
+  - &storetests
+      store_artifacts:
+        path: ~/test-results
+  - &storebuilds
+      store_artifacts:
+        path: ~/builds
+  - coveragesteps: &coveragesteps
+      - checkout
+      - *setupcmd
+      - *covandbuild
+      - *uploadtests
+      - *storetests
+      - *storebuilds
+workflows:
+  version: 2
+  testing:
+    jobs:
+      - python3.6
+      - python3.8
+  coverage:
+    jobs:
+      - python3.7
+jobs:
+  python3.6:
+    <<: *default
+    docker:
+      - image: circleci/python:3.6.9
+    steps: *defaultsteps
+  python3.8:
+    <<: *default
+    docker:
+      - image: circleci/python:3.8-rc
+    steps: *defaultsteps
+  python3.7:
+    <<: *default
+    steps: *coveragesteps
