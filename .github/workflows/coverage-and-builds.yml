@@ -1,0 +1,41 @@
+name: Coverage & Package Builds
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install package with testing dependencies
+      run: |
+        pip install -e .
+        pip install pytest pytest-cov codecov wheel
+    - name: Test with pytest
+      run: |
+        mkdir -p test-results
+        pytest --junit-xml test-results/tests.xml --cov-report xml --cov=. tests/
+    - name: Upload testing artifacts
+      uses: actions/upload-artifact@master
+      with:
+        name: test-results
+        path: test-results
+    - name: Send coverage to Codecov
+      uses: codecov/codecov-action@v1.0.2
+      with:
+        token: "${{secrets.CODECOV_TOKEN}}"
+    - name: Create source + build dists
+      run: |
+        mkdir -p builds
+        rm -rf test-results
+        python setup.py sdist -d builds
+        python setup.py bdist_wheel -d builds
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@master
+      with:
+        name: builds
+        path: builds

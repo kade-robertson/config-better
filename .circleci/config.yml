@@ -2,7 +2,7 @@ version: 2
 aliases:
   - default: &default
       docker:
-        - image: circleci/python:3.7.4
+        - image: circleci/python:3.3.7
       working_directory: ~/config-better-workspace
   - &setupcmd
       run:
@@ -19,61 +19,32 @@ aliases:
   - &uploadtests
       store_test_results:
         path: ~/test-results
+  - &storetests
+      store_artifacts:
+        path: ~/test-results
   - defaultsteps: &defaultsteps
       - checkout
       - *setupcmd
       - *uploadtests
-  - &storetests
-      store_artifacts:
-        path: ~/test-results
-  - &storebuilds
-      store_artifacts:
-        path: ~/builds
-  - coveragesteps: &coveragesteps
-      - checkout
-      - *setupcmd
-      - *covandbuild
-      - *uploadtests
       - *storetests
-      - *storebuilds
 workflows:
   version: 2
-  testing:
+  extra-testing:
     jobs:
       - python3.3
       - python3.4
-      - python3.5
-      - python3.6
       - python3.8
-  coverage:
-    jobs:
-      - python3.7
 jobs:
   python3.3:
     <<: *default
-    docker:
-      - image: circleci/python:3.3.7
     steps: *defaultsteps
   python3.4:
     <<: *default
     docker:
       - image: circleci/python:3.4.10
     steps: *defaultsteps
-  python3.5:
-    <<: *default
-    docker:
-      - image: circleci/python:3.5.7
-    steps: *defaultsteps
-  python3.6:
-    <<: *default
-    docker:
-      - image: circleci/python:3.6.9
-    steps: *defaultsteps
   python3.8:
     <<: *default
     docker:
       - image: circleci/python:3.8-rc
     steps: *defaultsteps
-  python3.7:
-    <<: *default
-    steps: *coveragesteps
