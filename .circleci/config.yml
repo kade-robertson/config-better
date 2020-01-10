@@ -33,7 +33,6 @@ workflows:
     jobs:
       - python3.3
       - python3.4
-      - python3.8
 jobs:
   python3.3:
     <<: *default
@@ -42,9 +41,4 @@ jobs:
     <<: *default
     docker:
       - image: circleci/python:3.4.10
-    steps: *defaultsteps
-  python3.8:
-    <<: *default
-    docker:
-      - image: circleci/python:3.8-rc
     steps: *defaultsteps
